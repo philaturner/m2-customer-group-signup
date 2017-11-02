@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<widgets xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Widget:etc/widget.xsd">
+    <widget id="sleepbenefits_register_widget" class="PhilTurner\GroupPricesInvite\Block\Widget\Register">
+        <label translate="true">Sleep Benefits Register</label>
+        <description translate="true">Sleep Benefits Register Form Widget</description>
+    </widget>
+</widgets>
