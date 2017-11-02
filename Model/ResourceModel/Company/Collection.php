@@ -16,7 +16,7 @@ class Collection extends AbstractCollection
     {
         $this->_init(
             'PhilTurner\GroupPricesInvite\Model\Company',
-            'PhilTurner\GroupPricesInvite\ResourceModel\Company'
+            'PhilTurner\GroupPricesInvite\Model\ResourceModel\Company'
         );
     }
 }
