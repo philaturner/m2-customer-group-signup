@@ -1,0 +1,6 @@
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+        <add id="PhilTurner_GroupPricesInvite::top_level" title="Group Price Invite" module="PhilTurner_GroupPricesInvite" sortOrder="110" parent="Magento_Backend::marketing" resource="Magento_Backend::marketing" />
+        <add id="PhilTurner_GroupPricesInvite::company_grid" title="Company Grid" module="PhilTurner_GroupPricesInvite" sortOrder="3" parent="PhilTurner_GroupPricesInvite::top_level" action="grouppricesinvite/company" resource="Magento_Backend::marketing"/>
+    </menu>
+</config>
