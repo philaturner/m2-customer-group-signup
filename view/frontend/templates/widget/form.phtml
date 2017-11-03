@@ -1,22 +1,34 @@
 <section id="sleepbenefits">
-    <form class="form"
-          action="<?= $block->escapeUrl($block->getFormAction()) ?>"
+    <form class="form create account form-create-account"
+          action="<?= $block->getUrl('sleepbenefits/register/result') ?>"
           method="post">
 
         <fieldset class="fieldset">
-            <legend class="legend"><span><?php /* @escapeNotVerified */ echo __('Test Form') ?></span></legend><br>
+            <legend class="legend"><span><?php /* @escapeNotVerified */ echo __('Enter your details to receive your invitation') ?></span></legend><br>
+
+            <!-- Unique code input -->
             <div class="field required">
-                <label for="number" class="label">
-                    <span><?php /* @escapeNotVerified */ echo __('Input') ?></span>
+                <label for="text" class="label">
+                    <span><?php /* @escapeNotVerified */ echo __('Your unique company code') ?></span>
                 </label>
 
                 <div class="control">
-                    <input type="text" id="number"
-                           name="number"
-                           class="input-text">
+                    <input type="text" id="unique_code"
+                           name="unique_code"
+                           class="input-text"
+                           value="<?= $block->escapeHtmlAttr($this->helper('Magento\Contact\Helper\Data')->getPostValue('unique_code'))?>"/>
                 </div>
             </div>
-        </fieldset>
+
+            <!-- Email input -->
+            <div class="field email required">
+                <label class="label" for="email"><span><?= $block->escapeHtml(__('Email')) ?></span></label>
+                <div class="control">
+                    <input name="email" id="email" title="<?= $block->escapeHtmlAttr(__('Email')) ?>"
+                           value="<?= $block->escapeHtmlAttr($this->helper('Magento\Contact\Helper\Data')->getPostValue('email') ?: $this->helper('Magento\Contact\Helper\Data')->getUserEmail()) ?>" class="input-text" type="email" data-validate="{required:true, 'validate-email':true}"/>
+                </div>
+            </div>
+
 
         <div class="actions-toolbar">
             <div class="primary">
