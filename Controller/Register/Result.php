@@ -24,6 +24,8 @@ class Result extends \Magento\Framework\App\Action\Action
     protected $userCode;
     protected $userEmail;
     protected $userPwd;
+    protected $userFirstName;
+    protected $userLastName;
 
     protected $validCodes;
 
@@ -83,15 +85,15 @@ class Result extends \Magento\Framework\App\Action\Action
 
         // Preparing data for new customer
         $customer->setEmail($this->userEmail);
-        $customer->setFirstname("Test");
-        $customer->setLastname("Person");
+        $customer->setFirstname($this->userFirstName);
+        $customer->setLastname($this->userLastName);
         $customer->setPassword($this->userPwd);
 
         // Save data
         try {
             $customer->save();
             $customer->sendNewAccountEmail();
-            $this->messageManager->addSuccess(__("Your customer account has been created, you'll receive a welcome Email."));
+            $this->messageManager->addSuccess(__("Your customer account has been created, please sign in."));
         } catch (\Exception $e) {
             $this->messageManager->addException($e, __('A customer may already exist with this email address. Please contact us.'));
         }
@@ -99,7 +101,7 @@ class Result extends \Magento\Framework\App\Action\Action
     }
 
     /**
-     * Gathers users inputted code and checks with those stored in db
+     * Gathers users inputted data and checks with those stored in db
      * @return $this
      */
     public function execute()
@@ -107,6 +109,9 @@ class Result extends \Magento\Framework\App\Action\Action
         $this->userCode = $this->getRequest()->getParam('unique_code');
         $this->userEmail = $this->getRequest()->getParam('email');
         $this->userPwd = $this->getRequest()->getParam('password');
+        $this->userFirstName = $this->getRequest()->getParam('firstname');
+        $this->userLastName = $this->getRequest()->getParam('lastname');
+
 
         if ($this->isValidCompanyCode()){
             $this->addCustomerToFFACustomerGroup();

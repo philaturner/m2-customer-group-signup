@@ -7,22 +7,48 @@
           autocomplete="off">
 
         <fieldset class="fieldset">
-            <legend class="legend"><span><?php /* @escapeNotVerified */ echo __('Enter your details to create an account.') ?></span></legend><br>
+            <legend class="legend"><span><?php /* @escapeNotVerified */ echo __('Registration Details') ?></span></legend><br>
 
             <!-- Unique code input -->
             <div class="field required">
-                <label for="text" class="label">
-                    <span><?php /* @escapeNotVerified */ echo __('Company Code') ?></span>
-                </label>
-
+                <label for="text" class="label"><span><?= $block->escapeHtml(__('Company Code')) ?></span></label>
                 <div class="control">
-                    <input type="text" id="unique_code"
+                    <input type="text" id="unique_code" title="<?= $block->escapeHtmlAttr(__('Company Code')) ?>"
                            name="unique_code"
                            class="input-text"
                            value="<?= $block->escapeHtmlAttr($this->helper('Magento\Contact\Helper\Data')->getPostValue('unique_code'))?>"/>
                 </div>
             </div>
+        </fieldset>
 
+        <fieldset class="fieldset">
+            <legend class="legend"><span><?php /* @escapeNotVerified */ echo __('Personal Information') ?></span></legend><br>
+
+            <!-- Firstname input -->
+            <div class="field required">
+                <label for="text" class="label"><span><?= $block->escapeHtml(__('First Name')) ?></span></label>
+                <div class="control">
+                    <input type="text" id="firstname" title="<?= $block->escapeHtmlAttr(__('First Name')) ?>"
+                           name="firstname"
+                           class="input-text"
+                           value="<?= $block->escapeHtmlAttr($this->helper('Magento\Contact\Helper\Data')->getPostValue('firstname'))?>"/>
+                </div>
+            </div>
+
+            <!-- Lastname input -->
+            <div class="field required">
+                <label for="text" class="label"><span><?= $block->escapeHtml(__('Last Name')) ?></span></label>
+                <div class="control">
+                    <input type="text" id="lastname" title="<?= $block->escapeHtmlAttr(__('Last Name')) ?>"
+                           name="lastname"
+                           class="input-text"
+                           value="<?= $block->escapeHtmlAttr($this->helper('Magento\Contact\Helper\Data')->getPostValue('lastname'))?>"/>
+                </div>
+            </div>
+        </fieldset>
+
+        <fieldset class="fieldset create account" data-hasrequired="<?= $block->escapeHtmlAttr(__('* Required Fields')) ?>">
+            <legend class="legend"><span><?php /* @escapeNotVerified */ echo __('Sign-in Information') ?></span></legend><br>
             <!-- Email input -->
             <div class="field email required">
                 <label class="label" for="email"><span><?= $block->escapeHtml(__('Email')) ?></span></label>
@@ -33,34 +59,33 @@
             </div>
 
             <!-- Password input -->
-            <fieldset class="fieldset create account" data-hasrequired="<?= $block->escapeHtmlAttr(__('* Required Fields')) ?>">
-                <div class="field password required">
-                    <label for="password" class="label"><span><?= $block->escapeHtml(__('Password')) ?></span></label>
-                    <div class="control">
-                        <input type="password" name="password" id="password"
-                               title="<?= $block->escapeHtmlAttr(__('Password')) ?>"
-                               class="input-text"
-                               data-password-min-length="8"
-                               data-validate="{required:true, 'validate-customer-password':true}"
-                               autocomplete="off">
-                        <div id="password-strength-meter-container" data-role="password-strength-meter" aria-live="polite">
-                            <div id="password-strength-meter" class="password-strength-meter">
-                                <?= $block->escapeHtml(__('Password Strength')) ?>:
-                                <span id="password-strength-meter-label" data-role="password-strength-meter-label">
+            <div class="field password required">
+                <label for="password" class="label"><span><?= $block->escapeHtml(__('Password')) ?></span></label>
+                <div class="control">
+                    <input type="password" name="password" id="password"
+                           title="<?= $block->escapeHtmlAttr(__('Password')) ?>"
+                           class="input-text"
+                           data-password-min-length="8"
+                           data-validate="{required:true, 'validate-customer-password':true}"
+                           autocomplete="off">
+                    <div id="password-strength-meter-container" data-role="password-strength-meter" aria-live="polite">
+                        <div id="password-strength-meter" class="password-strength-meter">
+                            <?= $block->escapeHtml(__('Password Strength')) ?>:
+                            <span id="password-strength-meter-label" data-role="password-strength-meter-label">
                                 <?= $block->escapeHtml(__('No Password')) ?>
                             </span>
-                            </div>
                         </div>
                     </div>
+                </div>
 
+            </div>
+            <div class="field confirmation required">
+                <label for="password-confirmation" class="label"><span><?= $block->escapeHtml(__('Confirm Password')) ?></span></label>
+                <div class="control">
+                    <input type="password" name="password_confirmation" title="<?= $block->escapeHtmlAttr(__('Confirm Password')) ?>" id="password-confirmation" class="input-text" data-validate="{required:true, equalTo:'#password'}" autocomplete="off">
                 </div>
-                <div class="field confirmation required">
-                    <label for="password-confirmation" class="label"><span><?= $block->escapeHtml(__('Confirm Password')) ?></span></label>
-                    <div class="control">
-                        <input type="password" name="password_confirmation" title="<?= $block->escapeHtmlAttr(__('Confirm Password')) ?>" id="password-confirmation" class="input-text" data-validate="{required:true, equalTo:'#password'}" autocomplete="off">
-                    </div>
-                </div>
-            </fieldset>
+            </div>
+        </fieldset>
 
 
         <div class="actions-toolbar">
