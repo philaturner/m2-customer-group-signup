@@ -22,8 +22,8 @@ class Result extends \Magento\Framework\App\Action\Action
     protected $customerFactory;
 
     protected $userCode;
-
     protected $userEmail;
+    protected $userPwd;
 
     protected $validCodes;
 
@@ -85,7 +85,7 @@ class Result extends \Magento\Framework\App\Action\Action
         $customer->setEmail($this->userEmail);
         $customer->setFirstname("Test");
         $customer->setLastname("Person");
-        $customer->setPassword("password");
+        $customer->setPassword($this->userPwd);
 
         // Save data
         try {
@@ -106,6 +106,7 @@ class Result extends \Magento\Framework\App\Action\Action
     {
         $this->userCode = $this->getRequest()->getParam('unique_code');
         $this->userEmail = $this->getRequest()->getParam('email');
+        $this->userPwd = $this->getRequest()->getParam('password');
 
         if ($this->isValidCompanyCode()){
             $this->addCustomerToFFACustomerGroup();

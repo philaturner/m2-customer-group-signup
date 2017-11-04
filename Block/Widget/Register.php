@@ -21,7 +21,6 @@ class Register extends Template implements BlockInterface
 
 
     /**
-     * Returns action url for register form
      * @param string
      * @return string
      */
