@@ -56,13 +56,11 @@ class Result extends \Magento\Framework\App\Action\Action
         $this->userCode = $this->getRequest()->getParam('unique_code');
 
         if ($this->isValidCompanyCode()){
-            echo ("\nCode is a valid one - Customer Invitation to be sent.");
+            $this->messageManager->addSuccess(__('Your invitation has been sent.'));
+            //TODO Add code to send invitation
         } else {
-            echo ("\n\nCode NOT valid - No invitation to be sent.");
+            $this->messageManager->addNoticeMessage(__('Your code is not valid, please check and try again.'));
         }
-
-        $this->_view->loadLayout();
-        $this->_view->getLayout()->initMessages();
-        $this->_view->renderLayout();
+        $this->getResponse()->setRedirect($this->_redirect->getRedirectUrl());
     }
 }
