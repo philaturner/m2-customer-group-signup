@@ -26,20 +26,18 @@ class Result extends \Magento\Framework\App\Action\Action
     }
 
     /**
-     *
+     * Check to see if user code is a valid code
+     * @return boolean
      */
     private function isValidCompanyCode()
     {
-        foreach ($this->getValidCodes() as $codes) {
-            if (strtolower($codes) == strtolower($this->userCode)){
-                return true;
-            }
-        }
-        return false;
+        $search_array = array_map('strtolower', $this->getValidCodes());
+        return in_array(strtolower($this->userCode), $search_array);
     }
 
     /**
-     *
+     * Gather all valid invitation codes
+     * @return array
      */
     private function getValidCodes()
     {
@@ -48,7 +46,8 @@ class Result extends \Magento\Framework\App\Action\Action
     }
 
     /**
-     *
+     * Gathers users inputted code and checks with those stored in db
+     * @return $this
      */
     public function execute()
     {
