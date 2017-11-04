@@ -11,16 +11,36 @@ class Result extends \Magento\Framework\App\Action\Action
      */
     protected $collectionFactory;
 
+    /**
+     * @var \Magento\Store\Model\StoreManagerInterface
+     */
+    protected $storeManager;
+
+    /**
+     * @var \Magento\Customer\Model\CustomerFactory
+     */
+    protected $customerFactory;
+
     protected $userCode;
+
+    protected $userEmail;
 
     protected $validCodes;
 
     /**
      * @param Context $context
      * @param CollectionFactory $collectionFactory
+     * @param \Magento\Store\Model\StoreManagerInterface $storeManager
+     * @param \Magento\Customer\Model\CustomerFactory $customerFactory
      */
-    public function __construct(Context $context, CollectionFactory $collectionFactory)
-    {
+    public function __construct(
+        Context $context,
+        CollectionFactory $collectionFactory,
+        \Magento\Store\Model\StoreManagerInterface $storeManager,
+        \Magento\Customer\Model\CustomerFactory $customerFactory
+    ) {
+        $this->storeManager = $storeManager;
+        $this->customerFactory = $customerFactory;
         $this->collectionFactory = $collectionFactory;
         parent::__construct($context);
     }
@@ -31,6 +51,7 @@ class Result extends \Magento\Framework\App\Action\Action
      */
     private function isValidCompanyCode()
     {
+        //TODO This may be more inefficient that a standard foreach
         $search_array = array_map('strtolower', $this->getValidCodes());
         return in_array(strtolower($this->userCode), $search_array);
     }
@@ -46,16 +67,43 @@ class Result extends \Magento\Framework\App\Action\Action
     }
 
     /**
+     * Add customer to selected customer group
+     */
+    private function addCustomerToFFACustomerGroup()
+    {
+        // Get Website ID
+        $websiteId  = $this->storeManager->getWebsite()->getWebsiteId();
+
+        // Instantiate object (this is the most important part)
+        $customer = $this->customerFactory->create();
+        $customer->setWebsiteId($websiteId);
+
+        // Adds customer to specific customer group //TODO pull in group from config
+        $customer->setGroupId(4);
+
+        // Preparing data for new customer
+        $customer->setEmail($this->userEmail);
+        $customer->setFirstname("Test");
+        $customer->setLastname("Person");
+        $customer->setPassword("password");
+
+        // Save data
+        $customer->save();
+        $customer->sendNewAccountEmail();
+        $this->messageManager->addSuccess(__("Your customer account has been created, you'll receive a welcome Email"));
+    }
+
+    /**
      * Gathers users inputted code and checks with those stored in db
      * @return $this
      */
     public function execute()
     {
         $this->userCode = $this->getRequest()->getParam('unique_code');
+        $this->userEmail = $this->getRequest()->getParam('email');
 
         if ($this->isValidCompanyCode()){
-            $this->messageManager->addSuccess(__('Your invitation has been sent.'));
-            //TODO Add code to send invitation
+            $this->addCustomerToFFACustomerGroup();
         } else {
             $this->messageManager->addNoticeMessage(__('Your code is not valid, please check and try again.'));
         }
