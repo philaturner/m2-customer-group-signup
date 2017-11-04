@@ -44,8 +44,7 @@ class Result extends \Magento\Framework\App\Action\Action
     private function getValidCodes()
     {
         $collection = $this->collectionFactory->create();
-        $this->validCodes = $collection->getColumnValues('invitation_code');
-        return $this->validCodes;
+        return $collection->getColumnValues('invitation_code');
     }
 
     /**
