@@ -74,7 +74,7 @@ class Result extends \Magento\Framework\App\Action\Action
         // Get Website ID
         $websiteId  = $this->storeManager->getWebsite()->getWebsiteId();
 
-        // Instantiate object (this is the most important part)
+        // Instantiate object
         $customer = $this->customerFactory->create();
         $customer->setWebsiteId($websiteId);
 
@@ -88,9 +88,14 @@ class Result extends \Magento\Framework\App\Action\Action
         $customer->setPassword("password");
 
         // Save data
-        $customer->save();
-        $customer->sendNewAccountEmail();
-        $this->messageManager->addSuccess(__("Your customer account has been created, you'll receive a welcome Email"));
+        try {
+            $customer->save();
+            $customer->sendNewAccountEmail();
+            $this->messageManager->addSuccess(__("Your customer account has been created, you'll receive a welcome Email."));
+        } catch (\Exception $e) {
+            $this->messageManager->addException($e, __('A customer may already exist with this email address. Please contact us.'));
+        }
+
     }
 
     /**
