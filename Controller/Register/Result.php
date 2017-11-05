@@ -137,7 +137,6 @@ class Result extends \Magento\Framework\App\Action\Action
         $this->userFirstName = $this->getRequest()->getParam('firstname');
         $this->userLastName = $this->getRequest()->getParam('lastname');
 
-
         if ($this->isValidCompanyCode()){
             $this->addCustomerToFFACustomerGroup();
         } else {

@@ -80,7 +80,7 @@ class Edit extends Action
         if ($id) {
             $model->load($id, 'id');
             if (!$model->getId()) {
-                $this->messageManager->addError(__('This company does not exists.'));  //Maybe use ->addMessages(array $messages, $group = null);
+                $this->messageManager->addError(__('This company does not exists.'));
                 /** \Magento\Backend\Model\View\Result\Redirect $resultRedirect */
                 $resultRedirect = $this->resultRedirectFactory->create();
 
@@ -96,6 +96,7 @@ class Edit extends Action
 
         $this->_coreRegistry->register('grouppricesinvite_company', $model);
 
+
         /** @var \Magento\Backend\Model\View\Result\Page $resultPage */
         $resultPage = $this->_initAction();
         $resultPage->addBreadcrumb(
@@ -104,7 +105,7 @@ class Edit extends Action
         );
         $resultPage->getConfig()->getTitle()->prepend(__('Company'));
         $resultPage->getConfig()->getTitle()
-            ->prepend($model->getId() ? $model->getName() : __('New Company'));
+            ->prepend($model->getId() ? $model->getDataByKey('company_name') : __('New Company'));
 
         return $resultPage;
     }
