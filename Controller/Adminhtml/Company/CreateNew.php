@@ -8,7 +8,7 @@ class CreateNew extends Action
     /**
      * @var \Magento\Backend\Model\View\Result\Forward
      */
-    protected $_resultForwardFactory;
+    protected $resultForwardFactory;
 
     /**
      * @param \Magento\Backend\App\Action\Context $context
@@ -18,7 +18,7 @@ class CreateNew extends Action
         \Magento\Backend\App\Action\Context $context,
         \Magento\Backend\Model\View\Result\ForwardFactory $resultForwardFactory
     ) {
-        $this->_resultForwardFactory = $resultForwardFactory;
+        $this->$resultForwardFactory = $resultForwardFactory;
         parent::__construct($context);
     }
 
@@ -32,7 +32,7 @@ class CreateNew extends Action
     public function execute()
     {
         /** @var \Magento\Backend\Model\View\Result\Forward $resultForward */
-        $resultForward = $this->_resultForwardFactory->create();
+        $resultForward = $this->resultForwardFactory->create();
         return $resultForward->forward('edit');
     }
 }

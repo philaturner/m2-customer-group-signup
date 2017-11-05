@@ -37,8 +37,6 @@ class Result extends \Magento\Framework\App\Action\Action
     protected $userFirstName;
     protected $userLastName;
 
-    protected $validCodes;
-
     /**
      * @param Context $context
      * @param CollectionFactory $collectionFactory
@@ -69,7 +67,6 @@ class Result extends \Magento\Framework\App\Action\Action
      */
     private function isValidCompanyCode()
     {
-        //TODO This may be more inefficient that a standard foreach
         $search_array = array_map('strtolower', $this->getValidCodes());
         return in_array(strtolower($this->userCode), $search_array);
     }
@@ -86,7 +83,7 @@ class Result extends \Magento\Framework\App\Action\Action
 
     /**
      * Gets customer ID from module config
-     * @return \Magento\Customer\Model\ResourceModel\Group\Collection
+     * @return integer
      */
     private function getCustomerGroupIDFromConfig()
     {
@@ -94,6 +91,7 @@ class Result extends \Magento\Framework\App\Action\Action
     }
 
     /**
+     * Setup customer and prepare to be created
      * Add customer to selected customer group
      */
     private function addCustomerToFFACustomerGroup()
@@ -120,13 +118,14 @@ class Result extends \Magento\Framework\App\Action\Action
             $customer->sendNewAccountEmail();
             $this->messageManager->addSuccess(__("Your customer account has been created, please sign in."));
         } catch (\Exception $e) {
-            $this->messageManager->addException($e, __('A customer may already exist with this email address. Please contact us.'));
+            $this->messageManager->addException($e, __('That customer already exists. Please log in or contact us for support.'));
         }
 
     }
 
     /**
      * Gathers users inputted data and checks with those stored in db
+     * If successful creates the customer account and adds to relevant customer group
      * @return $this
      */
     public function execute()
@@ -140,7 +139,7 @@ class Result extends \Magento\Framework\App\Action\Action
         if ($this->isValidCompanyCode()){
             $this->addCustomerToFFACustomerGroup();
         } else {
-            $this->messageManager->addNoticeMessage(__('Your code is not valid, please check and try again.'));
+            $this->messageManager->addNoticeMessage(__('Your code is not valid, please confirm and try again.'));
         }
         $this->getResponse()->setRedirect($this->_redirect->getRedirectUrl());
     }

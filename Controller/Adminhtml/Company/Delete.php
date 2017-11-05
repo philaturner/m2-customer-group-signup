@@ -5,7 +5,7 @@ use Magento\Backend\App\Action;
 
 class Delete extends Action
 {
-    protected $_model;
+    protected $model;
 
     /**
      * @param Action\Context $context
@@ -16,7 +16,7 @@ class Delete extends Action
         \PhilTurner\GroupPricesInvite\Model\Company $model
     ) {
         parent::__construct($context);
-        $this->_model = $model;
+        $this->model = $model;
     }
 
     //TODO Add isAllowed auth
@@ -33,7 +33,7 @@ class Delete extends Action
         $resultRedirect = $this->resultRedirectFactory->create();
         if ($id) {
             try {
-                $model = $this->_model;
+                $model = $this->model;
                 $model->load($id);
                 $model->delete();
                 $this->messageManager->addSuccess(__('Company deleted'));

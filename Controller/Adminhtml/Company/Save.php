@@ -8,7 +8,7 @@ class Save extends Action
     /**
      * @var \PhilTurner\GroupPricesInvite\Model\Company
      */
-    protected $_model;
+    protected $model;
 
     /**
      * @param Action\Context $context
@@ -19,7 +19,7 @@ class Save extends Action
         \PhilTurner\GroupPricesInvite\Model\Company $model
     ) {
         parent::__construct($context);
-        $this->_model = $model;
+        $this->model = $model;
     }
 
     //TODO at ACL verification
@@ -36,7 +36,7 @@ class Save extends Action
         $resultRedirect = $this->resultRedirectFactory->create();
         if ($data) {
             /** @var \PhilTurner\GroupPricesInvite\Model\Company $model */
-            $model = $this->_model;
+            $model = $this->model;
 
             $id = $this->getRequest()->getParam('id');
             if ($id) {

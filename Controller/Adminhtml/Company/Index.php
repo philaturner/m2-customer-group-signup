@@ -33,7 +33,6 @@ class Index extends Action
     {
         /** @var \Magento\Backend\Model\View\Result\Page $resultPage */
         $resultPage = $this->resultPageFactory->create();
-        //$resultPage->setActiveMenu('XXX');
         $resultPage->addBreadcrumb(__('Group Price Invite'), __('Group Price Invite'));
         $resultPage->addBreadcrumb(__('Manage Company'), __('Manage Company'));
         $resultPage->getConfig()->getTitle()->prepend(__('Group Price - Company Grid'));

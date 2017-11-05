@@ -14,17 +14,17 @@ class Edit extends Action
      *
      * @var Registry
      */
-    protected $_coreRegistry = null;
+    protected $coreRegistry = null;
 
     /**
      * @var PageFactory
      */
-    protected $_resultPageFactory;
+    protected $resultPageFactory;
 
     /**
      * @var Company
      */
-    protected $_model;
+    protected $model;
 
     /**
      * @param Context $context
@@ -38,9 +38,9 @@ class Edit extends Action
         Registry $registry,
         Company $model
     ) {
-        $this->_resultPageFactory = $resultPageFactory;
-        $this->_coreRegistry = $registry;
-        $this->_model = $model;
+        $this->resultPageFactory = $resultPageFactory;
+        $this->coreRegistry = $registry;
+        $this->model = $model;
         parent::__construct($context);
     }
 
@@ -55,7 +55,7 @@ class Edit extends Action
     {
         // load layout, set active menu and breadcrumbs
         /** @var \Magento\Backend\Model\View\Result\Page $resultPage */
-        $resultPage = $this->_resultPageFactory->create();
+        $resultPage = $this->resultPageFactory->create();
         //$resultPage->setActiveMenu('XXX');
         $resultPage->addBreadcrumb(__('Group Price Invite'), __('Group Price Invite'));
         $resultPage->addBreadcrumb(__('Manage Company'), __('Manage Company'));
@@ -73,7 +73,7 @@ class Edit extends Action
     {
         $id = $this->getRequest()->getParam('id');
 
-        $model = $this->_model;
+        $model = $this->model;
 
         // If we have got an id, we can edit the company
         // As create forwards here, so if no id then its new
@@ -94,7 +94,7 @@ class Edit extends Action
             $model->setData($data);
         }
 
-        $this->_coreRegistry->register('grouppricesinvite_company', $model);
+        $this->coreRegistry->register('grouppricesinvite_company', $model);
 
 
         /** @var \Magento\Backend\Model\View\Result\Page $resultPage */
