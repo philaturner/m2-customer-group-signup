@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <tab id="grouppricesinvite_config" translate="label" sortOrder="2000">
+            <label>Group Prices Invite</label>
+        </tab>
+        <section id="config" translate="label" sortOrder="130" showInDefault="1" showInWebsite="1" showInStore="1">
+            <class>separator-top</class>
+            <label>Configuration</label>
+            <tab>grouppricesinvite_config</tab>
+            <resource>PhilTurner_GroupPricesInvite::config</resource>
+            <group id="sleepbenefits" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="0" showInStore="0">
+                <label>General Configuration</label>
+                <field id="customer_group" translate="label" type="select" sortOrder="1" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Customer Group</label>
+                    <source_model>Magento\Customer\Model\ResourceModel\Group\Collection</source_model>
+                    <comment>The customer group that registrations are assigned to.</comment>
+                </field>
+            </group>
+        </section>
+    </system>
+</config>

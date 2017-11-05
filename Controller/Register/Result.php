@@ -17,9 +17,19 @@ class Result extends \Magento\Framework\App\Action\Action
     protected $storeManager;
 
     /**
+     * @var \Magento\Framework\App\Config\ScopeConfigInterface
+     */
+    protected $scopeConfig;
+
+    /**
      * @var \Magento\Customer\Model\CustomerFactory
      */
     protected $customerFactory;
+
+    /**
+     * @var \Magento\Customer\Model\ResourceModel\Group\Collection
+     */
+    protected $customerGroup;
 
     protected $userCode;
     protected $userEmail;
@@ -34,13 +44,19 @@ class Result extends \Magento\Framework\App\Action\Action
      * @param CollectionFactory $collectionFactory
      * @param \Magento\Store\Model\StoreManagerInterface $storeManager
      * @param \Magento\Customer\Model\CustomerFactory $customerFactory
+     * @param \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig
+     * @param \Magento\Customer\Model\ResourceModel\Group\Collection $customerGroup
      */
     public function __construct(
         Context $context,
         CollectionFactory $collectionFactory,
         \Magento\Store\Model\StoreManagerInterface $storeManager,
-        \Magento\Customer\Model\CustomerFactory $customerFactory
+        \Magento\Customer\Model\CustomerFactory $customerFactory,
+        \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig,
+        \Magento\Customer\Model\ResourceModel\Group\Collection $customerGroup
     ) {
+        $this->customerGroup = $customerGroup;
+        $this->scopeConfig = $scopeConfig;
         $this->storeManager = $storeManager;
         $this->customerFactory = $customerFactory;
         $this->collectionFactory = $collectionFactory;
@@ -69,6 +85,15 @@ class Result extends \Magento\Framework\App\Action\Action
     }
 
     /**
+     * Gets customer ID from module config
+     * @return \Magento\Customer\Model\ResourceModel\Group\Collection
+     */
+    private function getCustomerGroupIDFromConfig()
+    {
+        return $this->scopeConfig->getValue('config/sleepbenefits/customer_group', \Magento\Store\Model\ScopeInterface::SCOPE_STORE);
+    }
+
+    /**
      * Add customer to selected customer group
      */
     private function addCustomerToFFACustomerGroup()
@@ -80,8 +105,8 @@ class Result extends \Magento\Framework\App\Action\Action
         $customer = $this->customerFactory->create();
         $customer->setWebsiteId($websiteId);
 
-        // Adds customer to specific customer group //TODO pull in group from config
-        $customer->setGroupId(4);
+        // Adds customer to specific customer group via admin configuration
+        $customer->setGroupId($this->getCustomerGroupIDFromConfig());
 
         // Preparing data for new customer
         $customer->setEmail($this->userEmail);
