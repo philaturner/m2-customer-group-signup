@@ -9,8 +9,9 @@
         </item>
         <!-- define column type -->
         <item name="spinner" xsi:type="string">grouppricesinvite_company_columns</item>
-        <!-- Button to add new item -->
+        <!-- Buttons -->
         <item name="buttons" xsi:type="array">
+            <!-- New Company button -->
             <item name="add" xsi:type="array">
                 <item name="name" xsi:type="string">add</item>
                 <item name="label" xsi:type="string" translate="true">Add New Company</item>
@@ -19,7 +20,6 @@
             </item>
         </item>
     </argument>
-
 
     <!-- Data source -->
     <dataSource name="jobs_department_listing_data_source">
